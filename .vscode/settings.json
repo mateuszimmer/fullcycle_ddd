@@ -1,0 +1,4 @@
+{
+    "workbench.settings.openDefaultKeybindings": true,
+    "jestrunner.jestCommand": "npm test"
+}
