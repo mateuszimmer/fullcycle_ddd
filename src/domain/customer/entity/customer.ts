@@ -45,6 +45,10 @@ export class Customer {
         this.validate();
     }
 
+    changeAddress(address: Address) {
+        this._address = address;
+    }
+
     addRewardPoints(points: number): void {
         if (points < 0) {
             throw new Error("Points must be a positive value.");
