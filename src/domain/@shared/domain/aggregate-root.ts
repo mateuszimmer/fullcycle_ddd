@@ -4,7 +4,7 @@ import { Notification } from "../notification/notification";
 export abstract class AggregateRoot {
 
     protected id: string;
-    protected notification: Notification;
+    public notification: Notification;
     events: Set<EventInterface> = new Set();
 
     constructor() {

@@ -2,6 +2,7 @@ import { AggregateRoot } from "../../@shared/domain/aggregate-root";
 import { NotificationError } from "../../@shared/notification/notification.error";
 import { CustomerAddressChangedEvent, CustomerAddressChangedEventData } from "../events/customer-address-changed.event";
 import { CustomerCreatedEvent, CustomerCreatedEventData } from "../events/customer-created.event";
+import { CustomerValidatorFactory } from "../factory/customer-validator.factory";
 import { Address } from "../value-object/address";
 
 export class Customer extends AggregateRoot {
@@ -49,18 +50,7 @@ export class Customer extends AggregateRoot {
     }
 
     validate() {
-        if (this.id.length === 0) {
-            this.notification.addError({
-                context: 'customer',
-                message: 'Customer must have a valid id.'
-            })
-        }
-        if (this._name.length === 0) {
-            this.notification.addError({
-                context: 'customer',
-                message: 'Customer must have a valid name.'
-            })
-        }
+        CustomerValidatorFactory.create().validate(this);
     }
 
     changeName(name: string) {

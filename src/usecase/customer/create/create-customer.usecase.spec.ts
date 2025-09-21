@@ -58,7 +58,7 @@ describe('Create Customer unit tests', () => {
                 zipCode: '555987',
             }
         }
-        await expect(useCase.execute(input)).rejects.toThrow(new NotificationError([{context: 'customer', message: 'Customer must have a valid name.'}]));
+        await expect(useCase.execute(input)).rejects.toThrow(new NotificationError([{context: 'customer', message: 'name is a required field'}]));
         expect(createSpy).toHaveBeenCalledTimes(0);
     });
 

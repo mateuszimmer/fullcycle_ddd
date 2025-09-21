@@ -8,7 +8,7 @@ describe('Customer Entity Unit Tests', () => {
         expect(() => 
             new Customer("", "John")
         ).toThrow(
-            new NotificationError([{context: 'customer', message: 'Customer must have a valid id.'}])
+            new NotificationError([{context: 'customer', message: 'id is a required field'}])
         );
     });
 
@@ -16,7 +16,7 @@ describe('Customer Entity Unit Tests', () => {
         expect(() => 
             new Customer("123", "")
         ).toThrow(
-            new NotificationError([{context: 'customer', message: 'Customer must have a valid name.'}])
+            new NotificationError([{context: 'customer', message: 'name is a required field'}])
         );
     });
 
@@ -25,8 +25,8 @@ describe('Customer Entity Unit Tests', () => {
             new Customer("", "")
         ).toThrow(
             new NotificationError([
-                {context: 'customer', message: 'Customer must have a valid id.'},
-                {context: 'customer', message: 'Customer must have a valid name.'}
+                {context: 'customer', message: 'id is a required field'},
+                {context: 'customer', message: 'name is a required field'}
             ])
         );
     });

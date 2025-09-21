@@ -41,7 +41,7 @@ describe('Create Product UseCase Unit Tests', () => {
         const useCase = new CreateProductUseCase(repo);
 
         await expect(useCase.execute(input)).rejects.toThrow(
-            new NotificationError([{context: 'product', message: 'Product name is required'}])
+            new NotificationError([{context: 'product', message: 'name is a required field'}])
         );
 
         expect(createSpy).toHaveBeenCalledTimes(0)
@@ -58,7 +58,7 @@ describe('Create Product UseCase Unit Tests', () => {
         const useCase = new CreateProductUseCase(repo);
 
         await expect(useCase.execute(input)).rejects
-            .toThrow(new NotificationError([{context: 'Product B', message: 'Product price must be greater than zero'}]));
+            .toThrow(new NotificationError([{context: 'product', message: 'price must be a positive number'}]));
 
         expect(createSpy).toHaveBeenCalledTimes(0)
     });

@@ -1,5 +1,6 @@
 import { AggregateRoot } from "../../@shared/domain/aggregate-root";
 import { NotificationError } from "../../@shared/notification/notification.error";
+import { ProductValidatorFactory } from "../factory/product-validator.factory";
 import { ProductInterface } from "./product.interface";
 
 export class ProductB extends AggregateRoot implements ProductInterface {
@@ -20,24 +21,7 @@ export class ProductB extends AggregateRoot implements ProductInterface {
     }
 
     validate(): void {
-        if (!this.id) {
-            this.notification.addError({
-                context: 'Product B',
-                message: 'Product ID is required'
-            });
-        }
-        if (!this._name) {
-            this.notification.addError({
-                context: 'Product B',
-                message: 'Product name is required'
-            });
-        }
-        if (this._price <= 0) {
-            this.notification.addError({
-                context: 'Product B',
-                message: 'Product price must be greater than zero'
-            });
-        }
+        ProductValidatorFactory.create().validate(this);
     }
 
     changeName(newName: string): void {

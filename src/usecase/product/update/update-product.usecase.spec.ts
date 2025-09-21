@@ -74,7 +74,7 @@ describe('Update Product Usecase Unit Tests', () => {
         }
 
         await expect(useCase.execute(input)).rejects.toThrow(
-            new NotificationError([{context: 'product', message: 'Product name is required'}])
+            new NotificationError([{context: 'product', message: 'name is a required field'}])
         );
 
         expect(updateSpy).toHaveBeenCalledTimes(0);
@@ -98,7 +98,7 @@ describe('Update Product Usecase Unit Tests', () => {
         }
 
         await expect(useCase.execute(input)).rejects.toThrow(
-            new NotificationError([{context: 'product', message: 'Product price must be greater than zero'}])
+            new NotificationError([{context: 'product', message: 'price must be a positive number'}])
         );
 
         expect(updateSpy).toHaveBeenCalledTimes(0);

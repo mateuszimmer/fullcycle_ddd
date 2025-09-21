@@ -7,7 +7,7 @@ describe('Product Unit Tests', () => {
         expect(() => {
             new Product('', 'Product 1 Name', 10)
         }).toThrow(
-            new NotificationError([{context: 'product', message: 'Product ID is required'}])
+            new NotificationError([{context: 'product', message: 'id is a required field'}])
         );
     });
 
@@ -15,7 +15,7 @@ describe('Product Unit Tests', () => {
         expect(() => {
             new Product('1', '', 10)
         }).toThrow(
-            new NotificationError([{context: 'product', message: 'Product name is required'}])
+            new NotificationError([{context: 'product', message: 'name is a required field'}])
         );
     });
 
@@ -23,7 +23,7 @@ describe('Product Unit Tests', () => {
         expect(() => {
             new Product('1', 'Product 1 Name', 0)
         }).toThrow(
-            new NotificationError([{context: 'product', message: 'Product price must be greater than zero'}])
+            new NotificationError([{context: 'product', message: 'price must be a positive number'}])
         );
     });
 
@@ -38,7 +38,7 @@ describe('Product Unit Tests', () => {
         expect(() => {
             product.changeName('');
         }).toThrow(
-            new NotificationError([{context: 'product', message: 'Product name is required'}])
+            new NotificationError([{context: 'product', message: 'name is a required field'}])
         );
     });
     
@@ -51,7 +51,7 @@ describe('Product Unit Tests', () => {
     test('should throw error if new product price is less or equals to zero', () => {
         const product = new Product('1', 'Valid Name', 10);
         expect(() => product.changePrice(0)).toThrow(
-            new NotificationError([{context: 'product', message: 'Product price must be greater than zero'}])
+            new NotificationError([{context: 'product', message: 'price must be a positive number'}])
         );
     })
     
@@ -59,8 +59,8 @@ describe('Product Unit Tests', () => {
         const product = new Product('1', 'Valid Name', 10);
         expect(() => product.update("", 0)).toThrow(
             new NotificationError([
-                {context: 'product', message: 'Product name is required'},
-                {context: 'product', message: 'Product price must be greater than zero'}
+                {context: 'product', message: 'name is a required field'},
+                {context: 'product', message: 'price must be a positive number'}
             ])
         );
     })
