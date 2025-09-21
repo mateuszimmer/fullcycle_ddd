@@ -12,12 +12,11 @@ export class UpdateProductUseCase {
     public async execute(input: InputUpdateProductDTO): Promise<OutputUpdateProductDTO> {
         const persistedProduct = await this.repo.findById(input.id);
 
-        persistedProduct.changeName(input.name);
-        persistedProduct.changePrice(input.price);
+        persistedProduct.update(input.name, input.price);
         
         await this.repo.update(persistedProduct);
         return {
-            id: persistedProduct.id,
+            id: persistedProduct.getId(),
             name: persistedProduct.name,
             price: persistedProduct.price,
         } as OutputUpdateProductDTO;

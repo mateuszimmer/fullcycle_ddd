@@ -1,3 +1,4 @@
+import { NotificationError } from "../../@shared/notification/notification.error";
 import { Address } from "../value-object/address";
 import { Customer } from "./customer";
 
@@ -7,7 +8,7 @@ describe('Customer Entity Unit Tests', () => {
         expect(() => 
             new Customer("", "John")
         ).toThrow(
-            new Error('Customer must have a valid id.')
+            new NotificationError([{context: 'customer', message: 'Customer must have a valid id.'}])
         );
     });
 
@@ -15,9 +16,20 @@ describe('Customer Entity Unit Tests', () => {
         expect(() => 
             new Customer("123", "")
         ).toThrow(
-            new Error('Customer must have a valid name.')
+            new NotificationError([{context: 'customer', message: 'Customer must have a valid name.'}])
         );
-    })
+    });
+
+    test('should throw error when name and id is empty', () => {
+        expect(() => 
+            new Customer("", "")
+        ).toThrow(
+            new NotificationError([
+                {context: 'customer', message: 'Customer must have a valid id.'},
+                {context: 'customer', message: 'Customer must have a valid name.'}
+            ])
+        );
+    });
 
     test('should change customer name', () => {
         const customer = new Customer("123", "John");

@@ -14,7 +14,7 @@ export class FindCustomerUseCase {
         const customerEntity: Customer = await this.repo.findById(input.id);
 
         return {
-            id: customerEntity.id,
+            id: customerEntity.getId(),
             name: customerEntity.name,
             address: {
                 street: customerEntity.address.street,

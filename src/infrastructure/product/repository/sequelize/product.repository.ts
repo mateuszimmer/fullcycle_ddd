@@ -6,19 +6,19 @@ export class ProductRepository implements ProductRepositoryInterface {
     
     async create(entity: Product): Promise<void> {
         await ProductModel.create({
-            id: entity.id,
+            id: entity.getId(),
             name: entity.name,
             price: entity.price
         });
     }
     async update(entity: Product): Promise<void> {
-        const persistedEntity = await ProductModel.findOne({ where: { id: entity.id }});
+        const persistedEntity = await ProductModel.findOne({ where: { id: entity.getId() }});
 
         if(!persistedEntity) {
-            throw new Error(`Product with id ${entity.id} not found`);
+            throw new Error(`Product with id ${entity.getId()} not found`);
         }
 
-        await ProductModel.update({ name: entity.name, price: entity.price }, { where: { id: entity.id } });
+        await ProductModel.update({ name: entity.name, price: entity.price }, { where: { id: entity.getId() } });
     }
     async findById(id: string): Promise<Product> {
         const productModel = await ProductModel.findOne({ where: { id } });

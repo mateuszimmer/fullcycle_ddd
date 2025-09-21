@@ -153,8 +153,8 @@ describe('Customer Events Tests', () => {
         });
 
         expect(consoleLogSpy).toHaveBeenCalledTimes(2);
-        expect(consoleLogSpy).toHaveBeenCalledWith(`Endereço do cliente: ${customer.id}, ${customer.name} alterado para: ${address.toString()}`)
-        expect(consoleLogSpy).toHaveBeenCalledWith(`Endereço do cliente: ${customer.id}, ${customer.name} alterado para: ${newAddress.toString()}`)
+        expect(consoleLogSpy).toHaveBeenCalledWith(`Endereço do cliente: ${customer.getId()}, ${customer.name} alterado para: ${address.toString()}`)
+        expect(consoleLogSpy).toHaveBeenCalledWith(`Endereço do cliente: ${customer.getId()}, ${customer.name} alterado para: ${newAddress.toString()}`)
 
         consoleLogSpy.mockClear();
     })

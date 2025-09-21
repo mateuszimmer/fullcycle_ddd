@@ -4,6 +4,7 @@ import { InputCreateProductDTO, OutputCreateProductDTO } from "./create-product.
 import { CreateProductUseCase } from "./create-product.usecase";
 import { ProductModel } from "../../../infrastructure/product/repository/sequelize/product.model";
 import { ProductRepository } from "../../../infrastructure/product/repository/sequelize/product.repository";
+import { NotificationError } from "../../../domain/@shared/notification/notification.error";
 
 describe('Create Product UseCase Unit Tests', () => {
    
@@ -55,7 +56,8 @@ describe('Create Product UseCase Unit Tests', () => {
             price: 999
         }
 
-        await expect(useCase.execute(input)).rejects.toThrow(new Error('Product name is required'));
+        await expect(useCase.execute(input)).rejects
+            .toThrow(new NotificationError([{context: 'product', message: 'Product name is required'}]));
 
         expect(createSpy).toHaveBeenCalledTimes(0)
     });
@@ -71,7 +73,8 @@ describe('Create Product UseCase Unit Tests', () => {
             price: -2
         }
 
-        await expect(useCase.execute(input)).rejects.toThrow(new Error('Product price must be greater than zero'));
+        await expect(useCase.execute(input)).rejects
+            .toThrow(new NotificationError([{context: 'Product B', message: 'Product price must be greater than zero'}]));
 
         expect(createSpy).toHaveBeenCalledTimes(0)
     });

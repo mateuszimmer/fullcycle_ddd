@@ -19,7 +19,7 @@ export class ListCustomerUseCase {
 class OutputMapper {
     static toOutput(customerList: Customer[]): OutputListCustomerDTO {
         const customers: CustomerOutputType[] = customerList.map(customer => ({
-                    id: customer.id,
+                    id: customer.getId(),
                     name: customer.name,
                     address: {
                         street: customer.address.street,

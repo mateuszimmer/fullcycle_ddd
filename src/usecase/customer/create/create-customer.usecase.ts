@@ -26,7 +26,7 @@ export class CreateCustomerUseCase {
         await this.repo.create(customer);
 
         return {
-            id: customer.id,
+            id: customer.getId(),
             name: customer.name,
             address: {
                 street: customer.address.street,

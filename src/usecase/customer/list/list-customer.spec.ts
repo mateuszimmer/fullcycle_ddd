@@ -35,7 +35,7 @@ describe('List customer unit test', () => {
 
         expect(output.customers.length).toBe(2);
         expect(output.customers[0]).toStrictEqual({
-            id: customer1.id,
+            id: customer1.getId(),
             name: customer1.name,
             address: {
                 street: customer1.address.street,
@@ -46,7 +46,7 @@ describe('List customer unit test', () => {
             active: customer1.isActive(),
         })
         expect(output.customers[1]).toStrictEqual({
-            id: customer2.id,
+            id: customer2.getId(),
             name: customer2.name,
             address: {
                 street: customer2.address.street,

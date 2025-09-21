@@ -44,10 +44,10 @@ describe('Order Repository Tests', () => {
         const product = new Product("1", "Product Name", 100);
         productRepository.create(product);
 
-        const orderItem = new OrderItem("1", product.name, 10, product.price, product.id);
+        const orderItem = new OrderItem("1", product.name, 10, product.price, product.getId());
         
         const orderRepository = new OrderRepository();
-        const order = new Order("1", customer.id, [orderItem]);
+        const order = new Order("1", customer.getId(), [orderItem]);
 
         await orderRepository.create(order);
 
@@ -58,14 +58,14 @@ describe('Order Repository Tests', () => {
 
         expect(orderModel.toJSON()).toStrictEqual({
             id: "1",
-            customerId: customer.id,
+            customerId: customer.getId(),
             items: [
                 {
                     id: "1",
                     orderId: "1",
                     name: product.name,
                     price: product.price,
-                    productId: product.id,
+                    productId: product.getId(),
                     quantity: 10
                 }
             ],
@@ -85,15 +85,15 @@ describe('Order Repository Tests', () => {
         const product = new Product("p1", "Product 1", 100);
         await productRepository.create(product);
 
-        const orderItem = new OrderItem("i1", product.name, 10, product.price, product.id);
+        const orderItem = new OrderItem("i1", product.name, 10, product.price, product.getId());
 
-        const order = new Order("o1", customer.id, [orderItem]);
+        const order = new Order("o1", customer.getId(), [orderItem]);
         const orderRepository = new OrderRepository();
         await orderRepository.create(order);
 
         const product2 = new Product("p2", "Product 2", 200);
         await productRepository.create(product2);
-        const orderItem2 = new OrderItem("i2", product2.name, 5, product2.price, product2.id);
+        const orderItem2 = new OrderItem("i2", product2.name, 5, product2.price, product2.getId());
         order.addItem(orderItem2);
 
         await orderRepository.update(order);
@@ -102,14 +102,14 @@ describe('Order Repository Tests', () => {
 
         expect(updatedOrderModel.toJSON()).toStrictEqual({
             id: "o1",
-            customerId: customer.id,
+            customerId: customer.getId(),
             items: [
                 {
                     id: "i1",
                     orderId: "o1",
                     name: product.name,
                     price: product.price,
-                    productId: product.id,
+                    productId: product.getId(),
                     quantity: 10
                 },
                 {
@@ -117,7 +117,7 @@ describe('Order Repository Tests', () => {
                     orderId: "o1",
                     name: product2.name,
                     price: product2.price,
-                    productId: product2.id,
+                    productId: product2.getId(),
                     quantity: 5
                 }
             ],
@@ -137,13 +137,13 @@ describe('Order Repository Tests', () => {
         const productRepository = new ProductRepository();
         await productRepository.create(product);
         
-        const orderItem = new OrderItem("i1", product.name, 10, product.price, product.id);
+        const orderItem = new OrderItem("i1", product.name, 10, product.price, product.getId());
         
         const order = new Order("1", "c1", [orderItem]);
         const orderRepository = new OrderRepository();
         await orderRepository.create(order);
         
-        const orderItem2 = new OrderItem("i1", product.name, 10, product.price, product.id);
+        const orderItem2 = new OrderItem("i1", product.name, 10, product.price, product.getId());
         const orderDontExists = new Order("2", "c1", [orderItem2]);
 
         await expect(orderRepository.update(orderDontExists)).rejects.toThrow("Order not found");
@@ -166,7 +166,7 @@ describe('Order Repository Tests', () => {
         const productRepository = new ProductRepository();
         await productRepository.create(product);
 
-        const orderItem = new OrderItem("i1", product.name, 10, product.price, product.id);
+        const orderItem = new OrderItem("i1", product.name, 10, product.price, product.getId());
         const order = new Order("o1", "c1", [orderItem]);
 
         const orderRepository = new OrderRepository();

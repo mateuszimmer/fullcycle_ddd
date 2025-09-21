@@ -31,7 +31,7 @@ export class UpdateCustomerUseCase {
         this.repo.update(persistedCustomer);
 
         return {
-            id: persistedCustomer.id,
+            id: persistedCustomer.getId(),
             name: persistedCustomer.name,
             address: {
                 street: persistedCustomer.address.street,

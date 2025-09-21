@@ -72,7 +72,7 @@ describe('ProductRepository tests', () => {
 
         const product = await productRepository.findById('1');
 
-        expect(product.id).toBe('1');
+        expect(product.getId()).toBe('1');
         expect(product.name).toBe('TestProduct');
         expect(product.price).toBe(100);
     });
@@ -85,6 +85,6 @@ describe('ProductRepository tests', () => {
         const products = await productRepository.findAll();
 
         expect(products).toHaveLength(2);
-        expect(products[0].id).toBe
+        expect(products[0].getId()).toBe
     });
 })

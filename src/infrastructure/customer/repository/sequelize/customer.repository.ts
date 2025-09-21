@@ -8,7 +8,7 @@ export class CustomerRepository implements CustomerRepositoryInterface {
     async create(entity: Customer): Promise<void> {
         const address: Address = entity.address;
         await CustomerModel.create({
-            id: entity.id,
+            id: entity.getId(),
             name: entity.name,
             street: address.street,
             number: address.number,
@@ -20,9 +20,9 @@ export class CustomerRepository implements CustomerRepositoryInterface {
     }
 
     async update(entity: Customer): Promise<void> {
-        const persistedCustomer = await CustomerModel.findOne({ where: { id: entity.id } });
+        const persistedCustomer = await CustomerModel.findOne({ where: { id: entity.getId() } });
         if (!persistedCustomer) {
-            throw new Error(`Customer with id ${entity.id} not found.`);
+            throw new Error(`Customer with id ${entity.getId()} not found.`);
         }
         await persistedCustomer.update({
             name: entity.name,

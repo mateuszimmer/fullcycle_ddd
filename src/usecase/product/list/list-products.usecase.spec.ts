@@ -21,12 +21,12 @@ describe('List Products UseCase Unit Tests', () => {
 
         expect(output.products).toHaveLength(2);
         expect(output.products[0]).toStrictEqual({
-            id: product1.id,
+            id: product1.getId(),
             name: product1.name,
             price: product1.price,
         } as ProductDTO);
         expect(output.products[1]).toStrictEqual({
-            id: product2.id,
+            id: product2.getId(),
             name: product2.name,
             price: product2.price,
         } as ProductDTO);

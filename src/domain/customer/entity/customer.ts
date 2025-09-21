@@ -1,11 +1,10 @@
 import { AggregateRoot } from "../../@shared/domain/aggregate-root";
+import { NotificationError } from "../../@shared/notification/notification.error";
 import { CustomerAddressChangedEvent, CustomerAddressChangedEventData } from "../events/customer-address-changed.event";
 import { CustomerCreatedEvent, CustomerCreatedEventData } from "../events/customer-created.event";
 import { Address } from "../value-object/address";
 
 export class Customer extends AggregateRoot {
-
-    private _id: string;
     private _name: string;
     private _address?: Address;
     private _active: boolean;
@@ -13,14 +12,18 @@ export class Customer extends AggregateRoot {
 
     constructor(id: string, name: string) {
         super();
-        this._id = id;
+        this.id = id;
         this._name = name;
         this._active = false;
         this.validate();
+
+        if(this.notification.hasErrors()) {
+            throw new NotificationError(this.notification.errors);
+        }
     }
 
-    get id(): string {
-        return this._id;
+    getId(): string {
+        return this.id;
     }
 
     get name(): string {
@@ -38,19 +41,25 @@ export class Customer extends AggregateRoot {
     static create(id: string, name: string) {
         const customer = new Customer(id, name);
         const data: CustomerCreatedEventData = {
-            customerId: customer.id,
+            customerId: customer.getId(),
             customerName: customer.name
         }
-        customer.addEvent(new CustomerCreatedEvent(customer.id, data));
+        customer.addEvent(new CustomerCreatedEvent(customer.getId(), data));
         return customer;
     }
 
     validate() {
-        if (this._id.length === 0) {
-            throw new Error("Customer must have a valid id.");
+        if (this.id.length === 0) {
+            this.notification.addError({
+                context: 'customer',
+                message: 'Customer must have a valid id.'
+            })
         }
         if (this._name.length === 0) {
-            throw new Error("Customer must have a valid name.");
+            this.notification.addError({
+                context: 'customer',
+                message: 'Customer must have a valid name.'
+            })
         }
     }
 
@@ -62,11 +71,11 @@ export class Customer extends AggregateRoot {
     changeAddress(address: Address) {
         this._address = address;
         const data: CustomerAddressChangedEventData = {
-            customerId: this._id,
+            customerId: this.id,
             customerName: this._name,
             newAddress: address
         }
-        this.addEvent(new CustomerAddressChangedEvent(this._id, data));
+        this.addEvent(new CustomerAddressChangedEvent(this.id, data));
     }
 
     addRewardPoints(points: number): void {

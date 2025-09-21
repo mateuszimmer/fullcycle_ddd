@@ -13,7 +13,7 @@ export class ListProductsUseCase {
         return {
             products: persistedProducts.map(product => {
                 return {
-                    id: product.id,
+                    id: product.getId(),
                     name: product.name,
                     price: product.price
                 } as ProductDTO

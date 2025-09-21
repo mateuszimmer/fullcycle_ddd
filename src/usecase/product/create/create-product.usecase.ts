@@ -14,7 +14,7 @@ export class CreateProductUseCase {
         const product = ProductFactory.create(input.type, input.name, input.price);
         await this.repo.create(product);
         return {
-            id: product.id,
+            id: product.getId(),
             name: product.name,
             price: product.price
         } as OutputCreateProductDTO;

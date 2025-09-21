@@ -4,6 +4,7 @@ import { ProductModel } from "../../../infrastructure/product/repository/sequeli
 import { ProductRepository } from "../../../infrastructure/product/repository/sequelize/product.repository";
 import { InputUpdateProductDTO, OutputUpdateProductDTO } from "./update-product.dto";
 import { UpdateProductUseCase } from "./update-product.usecase";
+import { NotificationError } from "../../../domain/@shared/notification/notification.error";
 
 describe('Update Product Usecase Integration Tests', () => {
     let sequelize: Sequelize;
@@ -76,7 +77,9 @@ describe('Update Product Usecase Integration Tests', () => {
             price: 12.99
         }
 
-        await expect(useCase.execute(input)).rejects.toThrow(new Error('Product name is required'));
+        await expect(useCase.execute(input)).rejects.toThrow(
+            new NotificationError([{ context: 'product', message: 'Product name is required'}])
+        );
 
         expect(updateSpy).toHaveBeenCalledTimes(0);
         expect(findByIdSpy).toHaveBeenCalledTimes(1);
@@ -99,7 +102,13 @@ describe('Update Product Usecase Integration Tests', () => {
             price: -10
         }
 
-        await expect(useCase.execute(input)).rejects.toThrow(new Error('Product price must be greater than zero'));
+        await expect(useCase.execute(input)).rejects
+            .toThrow(new NotificationError([
+                {
+                    context: 'product',
+                    message: 'Product price must be greater than zero'
+                }])
+            );
 
         expect(updateSpy).toHaveBeenCalledTimes(0);
         expect(findByIdSpy).toHaveBeenCalledTimes(1);

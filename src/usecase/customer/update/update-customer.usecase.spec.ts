@@ -17,7 +17,7 @@ describe('Update Customer Usecase Unit Tests', () => {
     test('Should update a user', async () => {
         const expectedAddress = new Address('Wosh St.', 111, 'Toronto', '777777');
         const input = {
-            id: customer.id,
+            id: customer.getId(),
             name: customer.name,
             address: {
                 street: expectedAddress.street,
@@ -44,7 +44,7 @@ describe('Update Customer Usecase Unit Tests', () => {
     test('Should throw error if customer not found', async () => {
         const expectedAddress = new Address('Wosh St.', 111, 'Toronto', '777777');
         const input = {
-            id: customer.id,
+            id: customer.getId(),
             name: customer.name,
             address: {
                 street: expectedAddress.street,

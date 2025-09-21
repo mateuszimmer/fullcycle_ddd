@@ -38,7 +38,7 @@ describe('Find Product Integration Tests', () => {
         const output = await useCase.execute({ id: 'p123' });
 
         expect(output).toStrictEqual({
-            id: product.id,
+            id: product.getId(),
             name: product.name,
             price: product.price
         } as OutputFindProductDTO)

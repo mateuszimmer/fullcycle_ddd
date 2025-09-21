@@ -1,3 +1,4 @@
+import { NotificationError } from "../../../domain/@shared/notification/notification.error";
 import { ProductRepositoryInterface } from "../../../domain/product/repository/product-repository.interface";
 import { InputCreateProductDTO, OutputCreateProductDTO } from "./create-product.dto";
 import { CreateProductUseCase } from "./create-product.usecase";
@@ -39,7 +40,9 @@ describe('Create Product UseCase Unit Tests', () => {
 
         const useCase = new CreateProductUseCase(repo);
 
-        await expect(useCase.execute(input)).rejects.toThrow(new Error('Product name is required'));
+        await expect(useCase.execute(input)).rejects.toThrow(
+            new NotificationError([{context: 'product', message: 'Product name is required'}])
+        );
 
         expect(createSpy).toHaveBeenCalledTimes(0)
     });
@@ -54,7 +57,8 @@ describe('Create Product UseCase Unit Tests', () => {
 
         const useCase = new CreateProductUseCase(repo);
 
-        await expect(useCase.execute(input)).rejects.toThrow(new Error('Product price must be greater than zero'));
+        await expect(useCase.execute(input)).rejects
+            .toThrow(new NotificationError([{context: 'Product B', message: 'Product price must be greater than zero'}]));
 
         expect(createSpy).toHaveBeenCalledTimes(0)
     });

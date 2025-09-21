@@ -1,3 +1,4 @@
+import { NotificationError } from "../../../domain/@shared/notification/notification.error";
 import { Customer } from "../../../domain/customer/entity/customer";
 import { CustomerRepositoryInterface } from "../../../domain/customer/repository/customer-repository.interface";
 import { Address } from "../../../domain/customer/value-object/address";
@@ -57,7 +58,7 @@ describe('Create Customer unit tests', () => {
                 zipCode: '555987',
             }
         }
-        await expect(useCase.execute(input)).rejects.toThrow(new Error('Customer must have a valid name.'));
+        await expect(useCase.execute(input)).rejects.toThrow(new NotificationError([{context: 'customer', message: 'Customer must have a valid name.'}]));
         expect(createSpy).toHaveBeenCalledTimes(0);
     });
 

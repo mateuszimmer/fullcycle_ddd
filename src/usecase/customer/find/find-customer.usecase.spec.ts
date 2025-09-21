@@ -24,7 +24,7 @@ describe('Find Customer Unit Tests', () => {
         const customerDto = await useCase.execute({ id: '1' } as InputFindCustomerDTO);
 
         expect(customerDto).toStrictEqual({
-            id: customer.id,
+            id: customer.getId(),
             name: customer.name,
             address: {
                 street: customer.address.street,
